@@ -1,0 +1,310 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>matrixmult</title><meta name="generator" content="MATLAB 9.11"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-10-16"><meta name="DC.source" content="matrixmult.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%prompt = 'What is matrix A?\n&gt;&gt;';</span>
+<span class="comment">%A = input(prompt);</span>
+Asz=size(A);
+<span class="comment">%prompt = 'What is matrix B?\n&gt;&gt;';</span>
+<span class="comment">%B = input(prompt);</span>
+Bsz=size(B);
+<span class="keyword">if</span>(Asz(1,1)~=Bsz(1,2))
+disp(<span class="string">"Can't proceed,due to n of A rows does't equal to n of B cols!"</span>);
+<span class="keyword">return</span>;
+<span class="keyword">end</span>
+fprintf(<span class="string">"Original matrices\n"</span>);
+display(A);
+display(B);
+fprintf(<span class="string">"Matrices size\n"</span>);
+fprintf(<span class="string">"A\t%ix%i\nB\t%ix%i\n"</span>,Asz(1,1),Asz(1,2),Bsz(1,1),Bsz(1,2));
+fprintf(<span class="string">"Transpose matrices\n"</span>);
+Atrpd = A';
+Btrpd = B';
+fprintf(<span class="string">"A_{T}\n"</span>);
+display(Atrpd);
+fprintf(<span class="string">"B_{T}\n"</span>);
+display(Btrpd);
+fprintf(<span class="string">"Matrices determinants\n"</span>);
+Adet = det(A);
+Bdet = det(B);
+fprintf(<span class="string">"&#8710;A = %d\n&#8710;B = %d\n"</span>, Adet,Bdet);
+fprintf(<span class="string">"Adjoint matrices\n"</span>);
+Aadj = adjoint(A);
+Badj = adjoint(B);
+fprintf(<span class="string">"A*\n"</span>);
+display(Aadj);
+fprintf(<span class="string">"B*\n"</span>);
+display(Badj);
+fprintf(<span class="string">"Inverted matrices\nA^{-1}"</span>);
+Ainv = pinv(A);
+display(Ainv);
+fprintf(<span class="string">"B^{-1}\n"</span>);
+Binv = pinv(B);
+display(Binv);
+fprintf(<span class="string">"Matrix multiplication\n"</span>);
+Cab = A*B;
+Cba = B*A;
+fprintf(<span class="string">"A*B=Cab\n"</span>);
+display(Cab);
+fprintf(<span class="string">"B*A=Cba\n"</span>);
+display(Cba);
+fprintf(<span class="string">"Matrix rank\n"</span>);
+Arank = rank(A);
+Brank = rank(B);
+fprintf(<span class="string">"r(A) = %i\nr(B) = %i\n"</span>,Arank, Brank);
+fprintf(<span class="string">"\nC.F. Gauss method\n"</span>);
+Arref = rref(A);
+Brref = rref(B);
+fprintf(<span class="string">"Row echelons\n"</span>);
+display(Arref);
+display(Brref);
+X = Arref/Brref;
+fprintf(<span class="string">"System solution\n"</span>);
+disp(X);
+</pre><pre class="codeoutput">Original matrices
+
+A =
+
+     1     2     3
+     4     5     6
+     7     8     9
+
+
+B =
+
+    10    11    12
+    13    14    15
+    16    17    18
+
+Matrices size
+A	3x3
+B	3x3
+Transpose matrices
+A_{T}
+
+Atrpd =
+
+     1     4     7
+     2     5     8
+     3     6     9
+
+B_{T}
+
+Btrpd =
+
+    10    13    16
+    11    14    17
+    12    15    18
+
+Matrices determinants
+&#8710;A = -9.516197e-16
+&#8710;B = 0
+Adjoint matrices
+A*
+
+Aadj =
+
+   -3.0000    6.0000   -3.0000
+    6.0000  -12.0000    6.0000
+   -3.0000    6.0000   -3.0000
+
+B*
+
+Badj =
+
+   -3.0000    6.0000   -3.0000
+    6.0000  -12.0000    6.0000
+   -3.0000    6.0000   -3.0000
+
+Inverted matrices
+A^{-1}
+Ainv =
+
+   -0.6389   -0.1667    0.3056
+   -0.0556    0.0000    0.0556
+    0.5278    0.1667   -0.1944
+
+B^{-1}
+
+Binv =
+
+   -1.3889   -0.1667    1.0556
+   -0.0556   -0.0000    0.0556
+    1.2778    0.1667   -0.9444
+
+Matrix multiplication
+A*B=Cab
+
+Cab =
+
+    84    90    96
+   201   216   231
+   318   342   366
+
+B*A=Cba
+
+Cba =
+
+   138   171   204
+   174   216   258
+   210   261   312
+
+Matrix rank
+r(A) = 2
+r(B) = 2
+
+C.F. Gauss method
+Row echelons
+
+Arref =
+
+     1     0    -1
+     0     1     2
+     0     0     0
+
+
+Brref =
+
+     1     0    -1
+     0     1     2
+     0     0     0
+
+Warning: Matrix is singular to working precision. 
+System solution
+     1     0   NaN
+     0     1   NaN
+     0     0   NaN
+
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2021b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%prompt = 'What is matrix A?\n>>';
+%A = input(prompt);
+Asz=size(A);
+%prompt = 'What is matrix B?\n>>';
+%B = input(prompt);
+Bsz=size(B);
+if(Asz(1,1)~=Bsz(1,2))
+disp("Can't proceed,due to n of A rows does't equal to n of B cols!");
+return;
+end
+fprintf("Original matrices\n");
+display(A);
+display(B);
+fprintf("Matrices size\n");
+fprintf("A\t%ix%i\nB\t%ix%i\n",Asz(1,1),Asz(1,2),Bsz(1,1),Bsz(1,2));
+fprintf("Transpose matrices\n");
+Atrpd = A';
+Btrpd = B';
+fprintf("A_{T}\n");
+display(Atrpd);
+fprintf("B_{T}\n");
+display(Btrpd);
+fprintf("Matrices determinants\n");
+Adet = det(A);
+Bdet = det(B);
+fprintf("∆A = %d\n∆B = %d\n", Adet,Bdet);
+fprintf("Adjoint matrices\n");
+Aadj = adjoint(A);
+Badj = adjoint(B);
+fprintf("A*\n");
+display(Aadj);
+fprintf("B*\n");
+display(Badj);
+fprintf("Inverted matrices\nA^{-1}");
+Ainv = pinv(A);
+display(Ainv);
+fprintf("B^{-1}\n");
+Binv = pinv(B);
+display(Binv);
+fprintf("Matrix multiplication\n");
+Cab = A*B;
+Cba = B*A;
+fprintf("A*B=Cab\n");
+display(Cab);
+fprintf("B*A=Cba\n");
+display(Cba);
+fprintf("Matrix rank\n");
+Arank = rank(A);
+Brank = rank(B);
+fprintf("r(A) = %i\nr(B) = %i\n",Arank, Brank);
+fprintf("\nC.F. Gauss method\n");
+Arref = rref(A);
+Brref = rref(B);
+fprintf("Row echelons\n");
+display(Arref);
+display(Brref);
+X = Arref/Brref;
+fprintf("System solution\n");
+disp(X);
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>
