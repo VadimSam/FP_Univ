@@ -1,2 +1,0 @@
-# GitDemo
-Demo repo
