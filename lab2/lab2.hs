@@ -1,3 +1,4 @@
+import GHC.Real (Fractional)
 -- Комментарий в одну сторку
 {-
 А
@@ -29,8 +30,27 @@ sumPair p = fst p + snd p
 sumTriple :: Num a => (a, a, a) -> a
 sumTriple (x,y,z) = x + y + z
 
-facsList :: Integer -> [Integer] -- Задача 1. Всё гениальное просто! Применил генератор списков. (Липовача стр. 37)
-facsList n = [fac x | x <- [1..n]]
+
+nList :: Integer -> [Integer]
+nList n = [1..n]
+
+nevenList :: Integer -> [Integer]
+nevenList n = [2,4..2*n]
+
+noddList :: Integer -> [Integer]
+noddList n = [1,3..2*n]
+
+ncubesList :: Integer -> [Integer]
+ncubesList n = [x ^ 3| x  <- [1..n]]
+
+nfacList :: Integer -> [Integer]
+nfacList n = [fac x | x <- [1..n]]
+
+tenpowList :: Integer -> [Integer]
+tenpowList n = [10 ^ x | x <- [1..n]]
+
+triangularnList :: Double  -> [Double]
+triangularnList n = [(x * (x + 1))/2.0  | x <- [1..n]]
 
 rmEven :: [Integer] -> [Integer]
 rmEven l = [x | x <- l, odd x]
