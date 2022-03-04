@@ -1,4 +1,4 @@
-import GHC.Real (Fractional)
+module Lab2 where
 -- Комментарий в одну сторку
 {-
 А
