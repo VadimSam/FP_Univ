@@ -8,26 +8,22 @@ gMean :: (Floating a) => [a] -> a
 gMean xs = product xs ** (1 / fromIntegral (length xs))
 
 qsl :: Ord a => [a] -> [a]
-qsl[] = []
-qsl (p:xs) = qsl l ++ [p] ++ qsl g
-    where
-        l = filter (< p) xs
-        g = filter (>= p) xs
+qsl [] = []qsl (p:xs) = qsl l ++ [p] ++ qsl g
+ where
+  l = filter (< p) xs
+  g = filter (>= p) xs
 
-
-cmpLE ::  Ord a =>  a -> a -> Bool
+cmpLE :: Ord a => a -> a -> Bool
 cmpLE x y = x <= y
 
 cmpGE ::  Ord a =>  a -> a -> Bool
 cmpGE x y = x >= y
 
 qsp :: (a -> a -> Bool) -> [a] -> [a]
-qsp _ [] = []
-qsp f (x:xs) = l ++ [x] ++ r
-    where
-        l = qsp f (filter (f x) xs)
-        r  = qsp f (filter (not . f x) xs)
-
+qsp _ [] = []qsp f (x:xs) = l ++ [x] ++ r
+ where
+  l = qsp f (filter (f x) xs)
+  r  = qsp f (filter (not . f x) xs)
 
 rmEvenHOF :: [Integer] -> [Integer]
 rmEvenHOF = filter odd
